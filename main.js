@@ -345,7 +345,7 @@ require([
   };
 
   const layerOsmBuilding = new FeatureLayer({
-      url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Buildings_SA/FeatureServer",
+      url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Buildings/FeatureServer",
       renderer: renderer,
       // definitionExpression: "addr_city = 'São José dos Campos'",
       elevationInfo: {
@@ -520,7 +520,7 @@ require([
 
   // OSM_Amenities_SA
   const layerOsmAmenities = new FeatureLayer({
-    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Amenities_SA/FeatureServer",
+    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Amenities/FeatureServer",
     elevationInfo: {
       mode: "relative-to-scene"
     },
@@ -549,7 +549,7 @@ require([
 
   // OSM_Shops_SA
   const layerOsmShops = new FeatureLayer({
-    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Shops_SA/FeatureServer",
+    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Shops/FeatureServer",
     elevationInfo: {
       mode: "relative-to-scene"
     },
@@ -578,7 +578,7 @@ require([
 
   // OSM_Medical_Facilities_SA
   const layerOsmMedicalFacilities = new FeatureLayer({
-    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Medical_Facilities_SA/FeatureServer",
+    url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Medical/FeatureServer",
     elevationInfo: {
       mode: "relative-to-scene"
     },
@@ -607,7 +607,7 @@ require([
 
   // OSM_Highways_SA
   const layerOsmHighways = new FeatureLayer({
-      url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_Highways_SA/FeatureServer",
+      url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Highways/FeatureServer",
       elevationInfo: {
           mode: "relative-to-scene"
       },
