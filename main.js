@@ -4,6 +4,7 @@ require([
   "esri/geometry/Point",
   "esri/Graphic",
 	"esri/layers/FeatureLayer",
+	"esri/layers/CSVLayer",
 	"esri/layers/VectorTileLayer",
 	"esri/layers/GraphicsLayer",
 	"esri/layers/support/LabelClass",
@@ -19,7 +20,7 @@ require([
 	"esri/widgets/Editor",
   "esri/widgets/LayerList"
 ], function (WebScene, SceneView, Point, Graphic,
-	FeatureLayer, VectorTileLayer, GraphicsLayer, LabelClass,
+	FeatureLayer, CSVLayer, VectorTileLayer, GraphicsLayer, LabelClass,
 	WebStyleSymbol,
 	Search, Expand, DirectLineMeasurement3D, ElevationProfile, LineOfSight, Legend, BasemapGallery, Sketch, Editor, LayerList) {
 
@@ -203,21 +204,21 @@ require([
       qualityProfile: "high",
       // qualityProfile: "low",
       map: map,
-      // camera: {
-      //   position: {
-      //     latitude: -23.205741123825227,
-      //     longitude: -45.883761520974524,
-      //     z: 855
-      //   },
-      //   tilt: 78
-      // },
+    //   camera: {
+    //       position: {
+    //           latitude: -23.199984320282258,
+    //           longitude: -45.88930587986199,
+    //           z: 1145
+    //       },
+    //       tilt: 38
+    //   },
       camera: {
           position: {
-              latitude: -23.199984320282258,
-              longitude: -45.88930587986199,
-              z: 1145
+            latitude: -23.963939232996967,
+            longitude: -46.705509446487575,
+            z: 24920.23517484404
           },
-          tilt: 38
+          tilt: 57
       },
       environment: {
           lighting: {
@@ -246,6 +247,11 @@ require([
   // Pass view to global variable
   window.view = view;
   window.getCameraPosition = getCameraPosition;
+
+  // Monitor camera position changes
+  view.watch("camera", function(newValue) {
+    console.log("Camera position updated:", getCameraPosition());
+  });
 
   /**********************************************
    * Buildings OSM
@@ -707,14 +713,200 @@ require([
       },
   });
 
+  // OSM_Highways_SA
+  const layerWaterways = new FeatureLayer({
+      url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Waterways/FeatureServer",
+      elevationInfo: {
+          mode: "relative-to-scene"
+      },
+      outFields: ["*"],
+      renderer: {
+          type: "simple",
+          symbol: {
+              type: "simple-line",
+              color: "#4AA0E8",
+              width: 2
+          }
+      },
+      labelingInfo: [{
+          labelExpressionInfo: {
+              value: "{Name}"
+          },
+          symbol: {
+              type: "label-3d",
+              // autocasts as new LabelSymbol3D()
+              symbolLayers: [{
+                  type: "text",
+                  // autocasts as new TextSymbol3DLayer()
+                  material: {
+                      color: "white"
+                  },
+                  // we set a halo on the font to make the labels more visible with any kind of background
+                  halo: {
+                      size: 1,
+                      color: [50, 50, 50]
+                  },
+                  size: 10
+              }]
+          }
+      }],
+      popupTemplate: {
+          // autocasts as new PopupTemplate()
+          title: "{name}",
+          content: [{
+              type: "fields",
+              fieldInfos: [{
+                  fieldName: "objectid",
+                  label: "objectid"
+              }, {
+                  fieldName: "name",
+                  label: "name"
+              }, {
+                  fieldName: "osm_id2",
+                  label: "osm_id2"
+              }, {
+                  fieldName: "access",
+                  label: "access"
+              }, {
+                  fieldName: "bicycle",
+                  label: "bicycle"
+              }, {
+                  fieldName: "bridge",
+                  label: "bridge"
+              }, {
+                  fieldName: "bus",
+                  label: "bus"
+              }, {
+                  fieldName: "crossing",
+                  label: "crossing"
+              }, {
+                  fieldName: "foot",
+                  label: "foot"
+              }, {
+                  fieldName: "footway",
+                  label: "footway"
+              }, {
+                  fieldName: "highway",
+                  label: "highway"
+              }, {
+                  fieldName: "lanes",
+                  label: "lanes"
+              }, {
+                  fieldName: "layer",
+                  label: "layer"
+              }, {
+                  fieldName: "maxspeed",
+                  label: "maxspeed"
+              }, {
+                  fieldName: "oneway",
+                  label: "oneway"
+              }, {
+                  fieldName: "public_transport",
+                  label: "public_transport"
+              }, {
+                  fieldName: "service",
+                  label: "service"
+              }, {
+                  fieldName: "source",
+                  label: "source"
+              }, {
+                  fieldName: "surface",
+                  label: "surface"
+              }, {
+                  fieldName: "tracktype",
+                  label: "tracktype"
+              }, {
+                  fieldName: "width",
+                  label: "width"
+              }]
+          }]
+      },
+  });
+
+  
+
+  /**********************************************
+   * Monitoring Stations Layer
+   **********************************************/
+  const stationsRenderer = {
+    type: "simple",
+    symbol: {
+        type: "point-3d",
+        symbolLayers: [{
+          type: "icon",
+          resource: { primitive: "circle" },
+          material: { color: "#D13470" },
+          size: 10,
+          outline: {
+            color: "white",
+            size: 2
+          }
+        }],
+        verticalOffset: {
+          screenLength: 60
+        },
+        callout: {
+          type: "line", // autocasts as new LineCallout3D()
+          color: "white",
+          size: 1,
+          border: {
+            color: "#D13470"
+          }
+        }
+      }
+  };
+
+  const stationsPopupTemplate = {
+    title: "{nome}",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "posto",
+            label: "Posto"
+          },
+          {
+            fieldName: "Código API - FLU",
+            label: "Código API"
+          },
+          {
+            fieldName: "minDate",
+            label: "Data Inicial"
+          }
+        ]
+      }
+    ]
+  };
+
+  const stationsLayer = new CSVLayer({
+    title: "Estações de Monitoramento",
+    url: "stations_flu.csv",
+    copyright: "OpenStreetMap",
+    latitudeField: "lat",
+    longitudeField: "lon",
+    spatialReference: { wkid: 4326 },
+    // renderer: stationsRenderer,
+    popupTemplate: stationsPopupTemplate,
+    elevationInfo: {
+        mode: "relative-to-ground"
+    },
+    returnZ: false,
+    screenSizePerspectiveEnabled: false,
+    // Set a renderer that will show the points with icon symbols
+    renderer: stationsRenderer,
+  });
+
   // Layers in map
-  mapLayers.push(layerPointResult);
+//   mapLayers.push(layerPointResult);
   mapLayers.push(sketchLayer);
   mapLayers.push(layerOsmBuilding);
-  mapLayers.push(layerOsmHighways);
-  mapLayers.push(layerOsmAmenities);
-  mapLayers.push(layerOsmShops);
-  mapLayers.push(layerOsmMedicalFacilities);
+//   mapLayers.push(layerOsmHighways);
+  mapLayers.push(layerWaterways);
+  mapLayers.push(stationsLayer);
+//   mapLayers.push(layerOsmAmenities);
+//   mapLayers.push(layerOsmShops);
+//   mapLayers.push(layerOsmMedicalFacilities);
 
   /**********************************************
  * WIDGETS
@@ -832,5 +1024,7 @@ require([
 
   // Add layer
   map.addMany(mapLayers);
+
+  
 
 });
