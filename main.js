@@ -213,13 +213,13 @@ require([
     //       tilt: 38
     //   },
       camera: {
-          position: {
-            latitude: -23.963939232996967,
-            longitude: -46.705509446487575,
-            z: 24920.23517484404
-          },
-          tilt: 57
-      },
+        position: {
+            latitude: -23.999131658709025,
+            longitude: -46.55439762885409,
+            z:24920.23517484404
+        },
+        tilt: 56.999999999999496
+    },
       environment: {
           lighting: {
               date: new Date("June 15, 2015 12:00:00 EDT"),
@@ -250,7 +250,7 @@ require([
 
   // Monitor camera position changes
   view.watch("camera", function(newValue) {
-    console.log("Camera position updated:", getCameraPosition());
+    console.log(JSON.stringify(getCameraPosition()));
   });
 
   /**********************************************
