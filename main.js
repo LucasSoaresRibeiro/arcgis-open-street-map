@@ -916,6 +916,100 @@ require([
     }]
   });
 
+  // Station navigation state
+  let currentStationIndex = -1;
+  let stationFeatures = [];
+
+  // Function to navigate to a station
+  function navigateToStation(index) {
+    if (stationFeatures.length === 0) return;
+    
+    currentStationIndex = index;
+    const station = stationFeatures[currentStationIndex];
+    
+    // Highlight current station
+    stationsLayer.renderer = {
+      type: "simple",
+      symbol: {
+        type: "point-3d",
+        symbolLayers: [{
+          type: "icon",
+          resource: { primitive: "circle" },
+          material: { color: station.attributes.ObjectId === stationFeatures[currentStationIndex].attributes.ObjectId ? "#4CE13F" : "#D13470" },
+          size: 10,
+          outline: {
+            color: "white",
+            size: 2
+          }
+        }],
+        verticalOffset: {
+          screenLength: 60
+        },
+        callout: {
+          type: "line",
+          color: "white",
+          size: 1,
+          border: {
+            color: "#D13470"
+          }
+        }
+      }
+    };
+
+    // Navigate camera to station
+    view.goTo({
+      target: station.geometry,
+      zoom: 17,
+      tilt: 60
+    }, {
+      duration: 1000,
+      easing: "ease-out"
+    });
+  }
+
+  // Previous station button
+  const prevButton = document.createElement("calcite-button");
+  prevButton.setAttribute("appearance", "solid");
+  prevButton.setAttribute("color", "blue");
+  prevButton.setAttribute("icon-start", "chevron-left");
+  prevButton.innerHTML = "Previous";
+  prevButton.onclick = () => {
+    if (currentStationIndex > 0) {
+      navigateToStation(currentStationIndex - 1);
+    }
+  };
+
+  // Next station button
+  const nextButton = document.createElement("calcite-button");
+  nextButton.setAttribute("appearance", "solid");
+  nextButton.setAttribute("color", "blue");
+  nextButton.setAttribute("icon-end", "chevron-right");
+  nextButton.innerHTML = "Next";
+  nextButton.onclick = () => {
+    if (currentStationIndex < stationFeatures.length - 1) {
+      navigateToStation(currentStationIndex + 1);
+    }
+  };
+
+  // Add navigation container
+  const navContainer = document.createElement("div");
+  navContainer.style.display = "flex";
+  navContainer.style.gap = "8px";
+  navContainer.appendChild(prevButton);
+  navContainer.appendChild(nextButton);
+
+  view.ui.add(navContainer, "top-left");
+
+  // Load stations when layer is ready
+  stationsLayer.when(() => {
+    stationsLayer.queryFeatures().then(result => {
+      stationFeatures = result.features;
+      if (stationFeatures.length > 0) {
+        navigateToStation(0);
+      }
+    });
+  });
+
   // Layers in map
 //   mapLayers.push(layerPointResult);
   mapLayers.push(sketchLayer);
