@@ -1020,7 +1020,7 @@ require([
   navContainer.appendChild(overviewButton);
   navContainer.appendChild(nextButton);
 
-  view.ui.add(navContainer, "top-left");
+  view.ui.add(navContainer, "bottom-left");
 
   // Load stations when layer is ready
   stationsLayer.when(() => {
