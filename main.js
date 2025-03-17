@@ -730,7 +730,7 @@ require([
       },
       labelingInfo: [{
           labelExpressionInfo: {
-              value: "{Name}"
+              value: ""
           },
           symbol: {
               type: "label-3d",
