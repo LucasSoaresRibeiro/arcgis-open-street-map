@@ -248,10 +248,10 @@ require([
   window.view = view;
   window.getCameraPosition = getCameraPosition;
 
-  // Monitor camera position changes
-  view.watch("camera", function(newValue) {
-    console.log(JSON.stringify(getCameraPosition()));
-  });
+//   // Monitor camera position changes
+//   view.watch("camera", function(newValue) {
+//     console.log(JSON.stringify(getCameraPosition()));
+//   });
 
   /**********************************************
    * Buildings OSM
@@ -895,6 +895,25 @@ require([
     screenSizePerspectiveEnabled: false,
     // Set a renderer that will show the points with icon symbols
     renderer: stationsRenderer,
+    labelingInfo: [{
+      labelExpressionInfo: {
+        value: "{nome}"
+      },
+      symbol: {
+        type: "label-3d",
+        symbolLayers: [{
+          type: "text",
+          material: {
+            color: "white"
+          },
+          halo: {
+            size: 1,
+            color: [50, 50, 50]
+          },
+          size: 10
+        }]
+      }
+    }]
   });
 
   // Layers in map
@@ -1024,7 +1043,4 @@ require([
 
   // Add layer
   map.addMany(mapLayers);
-
-  
-
 });
