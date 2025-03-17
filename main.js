@@ -2,6 +2,7 @@ require([
 	"esri/WebScene",
 	"esri/views/SceneView",
   "esri/geometry/Point",
+  "esri/geometry/Extent",
   "esri/Graphic",
 	"esri/layers/FeatureLayer",
 	"esri/layers/CSVLayer",
@@ -19,7 +20,7 @@ require([
 	"esri/widgets/Sketch",
 	"esri/widgets/Editor",
   "esri/widgets/LayerList"
-], function (WebScene, SceneView, Point, Graphic,
+], function (WebScene, SceneView, Point, Extent, Graphic,
 	FeatureLayer, CSVLayer, VectorTileLayer, GraphicsLayer, LabelClass,
 	WebStyleSymbol,
 	Search, Expand, DirectLineMeasurement3D, ElevationProfile, LineOfSight, Legend, BasemapGallery, Sketch, Editor, LayerList) {
@@ -991,11 +992,32 @@ require([
     }
   };
 
+  // Overview button
+  const overviewButton = document.createElement("calcite-button");
+  overviewButton.setAttribute("appearance", "solid");
+  overviewButton.setAttribute("color", "blue");
+  overviewButton.setAttribute("icon-start", "zoom-out-fixed");
+  overviewButton.innerHTML = "Overview";
+  overviewButton.onclick = () => {
+    view.goTo({
+        position: {
+            latitude: -23.999131658709025,
+            longitude: -46.55439762885409,
+            z:24920.23517484404
+        },
+        tilt: 56.999999999999496
+    }, {
+      duration: 1000,
+      easing: "ease-out"
+    });
+  };
+
   // Add navigation container
   const navContainer = document.createElement("div");
   navContainer.style.display = "flex";
   navContainer.style.gap = "8px";
   navContainer.appendChild(prevButton);
+  navContainer.appendChild(overviewButton);
   navContainer.appendChild(nextButton);
 
   view.ui.add(navContainer, "top-left");
@@ -1004,9 +1026,9 @@ require([
   stationsLayer.when(() => {
     stationsLayer.queryFeatures().then(result => {
       stationFeatures = result.features;
-      if (stationFeatures.length > 0) {
-        navigateToStation(0);
-      }
+    //   if (stationFeatures.length > 0) {
+    //     navigateToStation(0);
+    //   }
     });
   });
 
