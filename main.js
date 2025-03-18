@@ -960,7 +960,7 @@ require([
     // Navigate camera to station
     view.goTo({
       target: station.geometry,
-      zoom: 17,
+      zoom: 19,
       tilt: 60
     }, {
       duration: 1000,
