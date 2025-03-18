@@ -193,9 +193,10 @@ require([
       //   basemap: "national-geographic"
       //   basemap: "terrain"
       // basemap: "osm"
-      basemap: {
-          baseLayers: [basemapLayer]
-      },
+      basemap: "topo-3d"
+    //   basemap: {
+    //       baseLayers: [basemapLayer]
+    //   },
 
   });
 
@@ -1035,7 +1036,7 @@ require([
   // Layers in map
 //   mapLayers.push(layerPointResult);
   mapLayers.push(sketchLayer);
-  mapLayers.push(layerOsmBuilding);
+//   mapLayers.push(layerOsmBuilding);
 //   mapLayers.push(layerOsmHighways);
   mapLayers.push(layerWaterways);
   mapLayers.push(stationsLayer);
