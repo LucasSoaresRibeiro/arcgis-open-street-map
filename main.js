@@ -718,6 +718,7 @@ require([
   // OSM_Highways_SA
   const layerWaterways = new FeatureLayer({
       url: "https://services6.arcgis.com/Do88DoK2xjTUCXd1/arcgis/rest/services/OSM_SA_Waterways/FeatureServer",
+      minScale: 10000,
       elevationInfo: {
           mode: "relative-to-scene"
       },
@@ -909,10 +910,10 @@ require([
             color: "white"
           },
           halo: {
-            size: 1,
-            color: [50, 50, 50]
+            size: 3,
+            color: "black"
           },
-          size: 10
+          size: 11
         }]
       }
     }]
@@ -961,8 +962,8 @@ require([
     // Navigate camera to station
     view.goTo({
       target: station.geometry,
-      zoom: 19,
-      tilt: 60
+      zoom: 16,
+      tilt: 40
     }, {
       duration: 1000,
       easing: "ease-out"
