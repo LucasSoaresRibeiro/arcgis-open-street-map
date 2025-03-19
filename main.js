@@ -224,9 +224,9 @@ require([
 
   // Create the web scene with custom elevation layer
   var map = new WebScene({
-    //   ground: {
-    //     layers: [new ExaggeratedElevationLayer()]
-    //   },
+      ground: {
+        layers: [new ExaggeratedElevationLayer()]
+      },
       basemap: "topo-3d"
   });
   // Create the view
@@ -1057,14 +1057,14 @@ require([
   // Load stations when layer is ready
   stationsLayer.when(() => {
     stationsLayer.queryFeatures().then(async result => {
-        // Query elevation for each station
-        const elevationLayer = new ElevationLayer({
-          url: "//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/TopoBathy3D/ImageServer"
-        });
-        for(const feature of result.features) {
-          const elevation = await elevationLayer.queryElevation(feature.geometry);
-          feature.attributes.elevacao = elevation.geometry.z.toFixed(1);
-        }
+        // // Query elevation for each station
+        // const elevationLayer = new ElevationLayer({
+        //   url: "//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/TopoBathy3D/ImageServer"
+        // });
+        // for(const feature of result.features) {
+        //   const elevation = await elevationLayer.queryElevation(feature.geometry);
+        //   feature.attributes.elevacao = elevation.geometry.z.toFixed(1);
+        // }
       stationFeatures = result.features;
       
     });
