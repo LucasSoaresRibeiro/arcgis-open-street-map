@@ -18933,7 +18933,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-padding": 3,
         "text-line-height": 1,
         "text-optional": true
@@ -18984,7 +18984,7 @@
           0,
           -0.9
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -19033,7 +19033,7 @@
           "Avenir Next LT Pro Demi",
           "Arial Unicode MS Regular"
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -19149,7 +19149,7 @@
           "Avenir Next LT Pro Demi",
           "Arial Unicode MS Regular"
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -19194,7 +19194,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -20005,7 +20005,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -20055,7 +20055,7 @@
           0,
           0.9
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -20105,7 +20105,7 @@
           0,
           0.9
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -20223,7 +20223,7 @@
           "Avenir Next LT Pro Demi",
           "Arial Unicode MS Regular"
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -20269,7 +20269,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -21124,7 +21124,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -21776,7 +21776,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -22394,7 +22394,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -23046,7 +23046,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -23095,7 +23095,7 @@
           0,
           -0.9
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -23144,7 +23144,7 @@
           0,
           -0.9
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -23260,7 +23260,7 @@
           "Avenir Next LT Pro Demi",
           "Arial Unicode MS Regular"
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -23305,7 +23305,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24116,7 +24116,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24282,7 +24282,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24461,7 +24461,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24653,7 +24653,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24741,7 +24741,7 @@
           0,
           0.8
         ],
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -24922,7 +24922,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -26522,7 +26522,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -26627,7 +26627,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-max-width": 6,
         "text-optional": true
       },
@@ -26660,7 +26660,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-max-width": 6,
         "text-optional": true
       },
@@ -26807,7 +26807,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -26840,7 +26840,7 @@
           ]
         },
         "text-max-width": 7,
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -27387,7 +27387,7 @@
           ]
         },
         "text-letter-spacing": 0.05,
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -27492,7 +27492,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -27640,7 +27640,7 @@
             ]
           ]
         },
-        "text-field": "{_name}"
+        "text-field": "{_name} ({elevation}m)"
       },
       "paint": {
         "text-color": "#dfe6da",
@@ -27898,7 +27898,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true
       },
       "paint": {
@@ -28050,7 +28050,7 @@
             ]
           ]
         },
-        "text-field": "{_name}"
+        "text-field": "{_name} ({elevation}m)"
       },
       "paint": {
         "text-color": "#dfe6da",
@@ -28201,7 +28201,7 @@
             ]
           ]
         },
-        "text-field": "{_name}"
+        "text-field": "{_name} ({elevation}m)"
       },
       "paint": {
         "text-color": "#dfe6da",
@@ -28340,7 +28340,7 @@
             ]
           ]
         },
-        "text-field": "{_name}",
+        "text-field": "{_name} ({elevation}m)",
         "text-optional": true,
         "text-transform": "uppercase"
       },
