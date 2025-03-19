@@ -19,11 +19,14 @@ require([
 	"esri/widgets/BasemapGallery",
 	"esri/widgets/Sketch",
 	"esri/widgets/Editor",
-  "esri/widgets/LayerList"
+  "esri/widgets/LayerList",
+  "esri/layers/BaseElevationLayer",
+  "esri/layers/ElevationLayer"
 ], function (WebScene, SceneView, Point, Extent, Graphic,
 	FeatureLayer, CSVLayer, VectorTileLayer, GraphicsLayer, LabelClass,
 	WebStyleSymbol,
-	Search, Expand, DirectLineMeasurement3D, ElevationProfile, LineOfSight, Legend, BasemapGallery, Sketch, Editor, LayerList) {
+	Search, Expand, DirectLineMeasurement3D, ElevationProfile, LineOfSight, Legend, BasemapGallery, Sketch, Editor, LayerList,
+  BaseElevationLayer, ElevationLayer) {
 
   /*
   const boxMsg = (title,msg)=>{
@@ -174,46 +177,64 @@ require([
       return null;
   }
 
+  const ExaggeratedElevationLayer = BaseElevationLayer.createSubclass({
+    properties: {
+      exaggeration: 5
+    },
+
+    load: function() {
+      this._elevation = new ElevationLayer({
+        url: "//elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/TopoBathy3D/ImageServer"
+      });
+
+      // wait for the elevation layer to load before resolving load()
+      this.addResolvingPromise(
+        this._elevation.load().then(() => {
+          // get tileInfo, spatialReference and fullExtent from the elevation service
+          // this is required for elevation services with a custom spatialReference
+          this.tileInfo = this._elevation.tileInfo;
+          this.spatialReference = this._elevation.spatialReference;
+          this.fullExtent = this._elevation.fullExtent;
+        })
+      );
+
+      return this;
+    },
+
+    // This method must be implemented for every elevation service
+    fetchTile: function(level, row, col, options) {
+      // calls fetchTile() on the elevationlayer for the tiles
+      // the data is returned as a heightmap
+      return this._elevation.fetchTile(level, row, col, options)
+        .then((data) => {
+          // multiply every value by the exaggeration
+          for (let i = 0; i < data.values.length; i++) {
+            data.values[i] = data.values[i] * this.exaggeration;
+          }
+
+          return data;
+        });
+    }
+  });
+
   var basemapLayer = new VectorTileLayer({
       url: "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer"
   });
-  // basemapLayer.loadStyle("OpenStreetMapBlueprint.json");
   basemapLayer.loadStyle("OpenStreetMapEsriLightGrayCanvasBase.json");
 
-  // Create the web scene
+  // Create the web scene with custom elevation layer
   var map = new WebScene({
-      ground: "world-elevation",
-      //   basemap: "streets"
-      // basemap: "topo"
-      // basemap: "dark-gray"
-      // basemap: "satellite"
-      //   basemap: "hybrid"
-      // basemap: "gray"
-      //   basemap: "oceans"
-      //   basemap: "national-geographic"
-      //   basemap: "terrain"
-      // basemap: "osm"
+      ground: {
+        layers: [new ExaggeratedElevationLayer()]
+      },
       basemap: "topo-3d"
-    //   basemap: {
-    //       baseLayers: [basemapLayer]
-    //   },
-
   });
-
   // Create the view
   var view = new SceneView({
       container: "viewDiv",
       qualityProfile: "high",
       // qualityProfile: "low",
       map: map,
-    //   camera: {
-    //       position: {
-    //           latitude: -23.199984320282258,
-    //           longitude: -45.88930587986199,
-    //           z: 1145
-    //       },
-    //       tilt: 38
-    //   },
       camera: {
         position: {
             latitude: -23.999131658709025,
