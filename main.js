@@ -218,11 +218,6 @@ require([
         }
     });
 
-    var basemapLayer = new VectorTileLayer({
-        url: "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer"
-    });
-    basemapLayer.loadStyle("OpenStreetMapEsriLightGrayCanvasBase.json");
-
     // Create the web scene with custom elevation layer
     var map = new WebScene({
         ground: {
@@ -1121,7 +1116,7 @@ require([
                 expanded: false
             });
 
-            view.ui.add(stationsListContainer, "bottom-right");
+            view.ui.add(stationsListExpand, "bottom-right");
 
         });
     });
