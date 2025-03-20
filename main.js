@@ -21,12 +21,13 @@ require([
 	"esri/widgets/Editor",
   "esri/widgets/LayerList",
   "esri/layers/BaseElevationLayer",
-  "esri/layers/ElevationLayer"
+  "esri/layers/ElevationLayer",
+  "esri/geometry/geometryEngine"
 ], function (WebScene, SceneView, Point, Extent, Graphic,
 	FeatureLayer, CSVLayer, VectorTileLayer, GraphicsLayer, LabelClass,
 	WebStyleSymbol,
 	Search, Expand, DirectLineMeasurement3D, ElevationProfile, LineOfSight, Legend, BasemapGallery, Sketch, Editor, LayerList,
-  BaseElevationLayer, ElevationLayer) {
+  BaseElevationLayer, ElevationLayer, geometryEngine) {
 
   /*
   const boxMsg = (title,msg)=>{
@@ -1001,9 +1002,14 @@ require([
 
     layerWaterways.queryFeatures(query).then(function(result) {
       if (result.features.length > 0) {
-        // Update elevation profile with intersecting waterway
+        // Combine all intersecting waterways into a single geometry
+        const combinedGeometry = result.features.reduce((union, feature, index) => {
+          return index === 0 ? feature.geometry : geometryEngine.union(union, feature.geometry);
+        }, null);
+
+        // Update elevation profile with combined waterway geometry
         widgetElevationProfile.input = {
-          geometry: result.features[0].geometry,
+          geometry: combinedGeometry,
           layer: layerWaterways
         };
       }
@@ -1106,6 +1112,30 @@ require([
  * WIDGETS
  **********************************************/
 
+
+  // ElevationProfile
+  const widgetElevationProfile = new ElevationProfile({
+    view: view
+});
+view.ui.add(new Expand({
+    view: view,
+    content: widgetElevationProfile,
+    expanded: true,
+    expandTooltip: "Análise de elevação",
+    expandIconClass: "esri-icon-elevation-profile",
+}), "top-right");
+//   view.ui.add(widgetElevationProfile, { position: 'bottom-right' });
+
+  // Layer List
+  const widgetLayerList = new LayerList({
+      view: view
+  });
+  view.ui.add(new Expand({
+      view: view,
+      content: widgetLayerList,
+      expandTooltip: "Camadas"
+  }), "top-right");
+
 //   // Search
 //   var widgetSearch = new Search({
 //       view: view,
@@ -1131,16 +1161,6 @@ require([
 //       expandIconClass: "esri-icon-sketch-rectangle"
 //   }), "top-right");
 
-  // Layer List
-  const widgetLayerList = new LayerList({
-      view: view
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetLayerList,
-      expandTooltip: "Camadas"
-  }), "top-right");
-
 //   // Legend
 //   var widgetLegend = new Legend({
 //       view: view,
@@ -1157,15 +1177,15 @@ require([
 //       expandTooltip: "Legenda"
 //   }), "top-right");
 
-//   // Basemap
-//   const widgetBasemapGallery = new BasemapGallery({
-//       view: view
-//   });
-//   view.ui.add(new Expand({
-//       view: view,
-//       content: widgetBasemapGallery,
-//       expandTooltip: "Trocar basemap"
-//   }), "top-right");
+  // Basemap
+  const widgetBasemapGallery = new BasemapGallery({
+      view: view
+  });
+  view.ui.add(new Expand({
+      view: view,
+      content: widgetBasemapGallery,
+      expandTooltip: "Trocar basemap"
+  }), "top-right");
 
 //   // DirectLineMeasurement3D
 //   var widgetMeasurement = new DirectLineMeasurement3D({
@@ -1191,19 +1211,6 @@ require([
 //       expandTooltip: "Análise de visada",
 //       expandIconClass: "esri-icon-line-of-sight"
 //   }), "top-right");
-
-  // ElevationProfile
-  const widgetElevationProfile = new ElevationProfile({
-      view: view
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetElevationProfile,
-      expanded: true,
-      expandTooltip: "Análise de elevação",
-      expandIconClass: "esri-icon-elevation-profile",
-  }), "top-right");
-//   view.ui.add(widgetElevationProfile, { position: 'bottom-right' });
 
   /**********************************************
  * MAIN
