@@ -989,6 +989,26 @@ require([
       }
     };
 
+    // Find intersecting waterway
+    const query = layerWaterways.createQuery();
+    query.geometry = station.geometry;
+    query.distance = 80;
+    query.units = "meters";
+    query.spatialRelationship = "within";
+    query.spatialRelationship = "intersects";
+    query.returnGeometry = true;
+    query.outFields = ["*"];
+
+    layerWaterways.queryFeatures(query).then(function(result) {
+      if (result.features.length > 0) {
+        // Update elevation profile with intersecting waterway
+        widgetElevationProfile.input = {
+          geometry: result.features[0].geometry,
+          layer: layerWaterways
+        };
+      }
+    });
+
     // Navigate camera to station
     view.goTo({
       target: station.geometry,
@@ -998,6 +1018,7 @@ require([
       duration: 1000,
       easing: "ease-out"
     });
+
   }
 
   // Previous station button
@@ -1085,30 +1106,30 @@ require([
  * WIDGETS
  **********************************************/
 
-  // Search
-  var widgetSearch = new Search({
-      view: view,
-      allPlaceholder: "Endereço",
-      includeDefaultSources: true,
-  });
-  view.ui.add(widgetSearch, {
-      position: "top-right"
-  });
+//   // Search
+//   var widgetSearch = new Search({
+//       view: view,
+//       allPlaceholder: "Endereço",
+//       includeDefaultSources: true,
+//   });
+//   view.ui.add(widgetSearch, {
+//       position: "top-right"
+//   });
   // view.ui.add(new Expand({ view: view, content: widgetSearch, expandTooltip: "Procurar endereço" }), "top-right");
 
-  // Sketch
-  const widgetSketch = new Sketch({
-      layer: sketchLayer,
-      view: view,
-      // graphic will be selected as soon as it is created
-      creationMode: "update"
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetSketch,
-      expandTooltip: "Desenhar",
-      expandIconClass: "esri-icon-sketch-rectangle"
-  }), "top-right");
+//   // Sketch
+//   const widgetSketch = new Sketch({
+//       layer: sketchLayer,
+//       view: view,
+//       // graphic will be selected as soon as it is created
+//       creationMode: "update"
+//   });
+//   view.ui.add(new Expand({
+//       view: view,
+//       content: widgetSketch,
+//       expandTooltip: "Desenhar",
+//       expandIconClass: "esri-icon-sketch-rectangle"
+//   }), "top-right");
 
   // Layer List
   const widgetLayerList = new LayerList({
@@ -1120,56 +1141,56 @@ require([
       expandTooltip: "Camadas"
   }), "top-right");
 
-  // Legend
-  var widgetLegend = new Legend({
-      view: view,
-      // layerInfos: [
-      //   {
-      //     layer: layerOsmBuilding,
-      //     title: "Prédios OpenStreetMap"
-      //   }
-      // ]
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetLegend,
-      expandTooltip: "Legenda"
-  }), "top-right");
+//   // Legend
+//   var widgetLegend = new Legend({
+//       view: view,
+//       // layerInfos: [
+//       //   {
+//       //     layer: layerOsmBuilding,
+//       //     title: "Prédios OpenStreetMap"
+//       //   }
+//       // ]
+//   });
+//   view.ui.add(new Expand({
+//       view: view,
+//       content: widgetLegend,
+//       expandTooltip: "Legenda"
+//   }), "top-right");
 
-  // Basemap
-  const widgetBasemapGallery = new BasemapGallery({
-      view: view
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetBasemapGallery,
-      expandTooltip: "Trocar basemap"
-  }), "top-right");
+//   // Basemap
+//   const widgetBasemapGallery = new BasemapGallery({
+//       view: view
+//   });
+//   view.ui.add(new Expand({
+//       view: view,
+//       content: widgetBasemapGallery,
+//       expandTooltip: "Trocar basemap"
+//   }), "top-right");
 
-  // DirectLineMeasurement3D
-  var widgetMeasurement = new DirectLineMeasurement3D({
-      view: view
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetMeasurement,
-      expandTooltip: "Medir"
-  }), "top-right");
+//   // DirectLineMeasurement3D
+//   var widgetMeasurement = new DirectLineMeasurement3D({
+//       view: view
+//   });
+//   view.ui.add(new Expand({
+//       view: view,
+//       content: widgetMeasurement,
+//       expandTooltip: "Medir"
+//   }), "top-right");
 
   // // Editor
   // const widgetEditor = new Editor({ view: view });
   // view.ui.add(new Expand({ view: view, content: widgetEditor, expandTooltip: "Editar" }), "top-right");
 
-  // LineOfSight
-  const widgetLineOfSight = new LineOfSight({
-      view: view
-  });
-  view.ui.add(new Expand({
-      view: view,
-      content: widgetLineOfSight,
-      expandTooltip: "Análise de visada",
-      expandIconClass: "esri-icon-line-of-sight"
-  }), "top-right");
+//   // LineOfSight
+//   const widgetLineOfSight = new LineOfSight({
+//       view: view
+//   });
+//   view.ui.add(new Expand({
+//       view: view,
+//       content: widgetLineOfSight,
+//       expandTooltip: "Análise de visada",
+//       expandIconClass: "esri-icon-line-of-sight"
+//   }), "top-right");
 
   // ElevationProfile
   const widgetElevationProfile = new ElevationProfile({
@@ -1178,9 +1199,11 @@ require([
   view.ui.add(new Expand({
       view: view,
       content: widgetElevationProfile,
+      expanded: true,
       expandTooltip: "Análise de elevação",
-      expandIconClass: "esri-icon-elevation-profile"
+      expandIconClass: "esri-icon-elevation-profile",
   }), "top-right");
+//   view.ui.add(widgetElevationProfile, { position: 'bottom-right' });
 
   /**********************************************
  * MAIN
