@@ -1121,7 +1121,7 @@ require([
                 expanded: false
             });
 
-            view.ui.add(stationsListExpand, "top-right");
+            view.ui.add(stationsListContainer, "bottom-right");
 
         });
     });
